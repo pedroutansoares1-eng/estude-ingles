@@ -1,0 +1,92 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:EnglishStudy.ViewModels"
+             x:Class="EnglishStudy.Views.QuizView"
+             x:DataType="vm:QuizViewModel"
+             Background="{StaticResource Bg}">
+
+  <Panel Margin="30">
+
+    <!-- Escolha do tema -->
+    <ScrollViewer IsVisible="{Binding IsPick}" VerticalScrollBarVisibility="Auto">
+      <StackPanel Spacing="14" MaxWidth="720" HorizontalAlignment="Left">
+        <TextBlock Text="❓  Gramática" FontSize="24" FontWeight="Bold" Foreground="{StaticResource Text}" />
+        <TextBlock TextWrapping="Wrap" FontSize="13" Foreground="{StaticResource Dim}"
+                   Text="Teste seus conhecimentos de gramática. Cada resposta vem com uma explicação." />
+
+        <ItemsControl ItemsSource="{Binding Topics}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:CategoryOption">
+              <Button Command="{Binding Command}" Margin="0,5" Padding="16,12" CornerRadius="12"
+                      Background="{StaticResource Surface}"
+                      HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                <StackPanel Spacing="2">
+                  <TextBlock Text="{Binding Label}" FontSize="15" FontWeight="SemiBold"
+                             Foreground="{StaticResource Text}" />
+                  <TextBlock Text="{Binding Detail}" FontSize="12" Foreground="{StaticResource Dim}" />
+                </StackPanel>
+              </Button>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- Quiz em andamento -->
+    <ScrollViewer IsVisible="{Binding IsPlaying}" VerticalScrollBarVisibility="Auto">
+      <StackPanel Spacing="16" MaxWidth="700" HorizontalAlignment="Left">
+
+        <ProgressBar Value="{Binding ProgressValue}" Minimum="0" Maximum="100" Height="8"
+                     Foreground="{StaticResource Accent}" Background="{StaticResource Surface2}" />
+        <TextBlock Text="{Binding ProgressText}" FontSize="13" Foreground="{StaticResource Dim}" />
+
+        <TextBlock Text="{Binding QuestionText}" FontSize="22" FontWeight="SemiBold"
+                   Foreground="{StaticResource Text}" TextWrapping="Wrap" />
+
+        <ItemsControl ItemsSource="{Binding Options}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:ChoiceOption">
+              <Button Command="{Binding Command}" Background="{Binding Background}" Margin="0,5"
+                      Padding="16,12" CornerRadius="12"
+                      HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                <TextBlock Text="{Binding Text}" FontSize="15" TextWrapping="Wrap" />
+              </Button>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Border IsVisible="{Binding FeedbackVisible}" Background="{Binding FeedbackBrush}"
+                CornerRadius="12" Padding="16">
+          <StackPanel Spacing="10">
+            <TextBlock Text="{Binding FeedbackText}" FontSize="14" Foreground="{StaticResource Text}"
+                       TextWrapping="Wrap" />
+            <Button Content="{Binding ContinueLabel}" Command="{Binding ContinueCommand}"
+                    Classes="accent" CornerRadius="10" Padding="18,10" HorizontalAlignment="Left" />
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- Resultado -->
+    <Border IsVisible="{Binding IsResult}" Background="{StaticResource Surface}" CornerRadius="16"
+            Padding="34" MaxWidth="560" VerticalAlignment="Center" HorizontalAlignment="Center">
+      <StackPanel Spacing="12" HorizontalAlignment="Center">
+        <TextBlock Text="{Binding ResultEmoji}" FontSize="46" HorizontalAlignment="Center" />
+        <TextBlock Text="{Binding ResultTitle}" FontSize="21" FontWeight="SemiBold"
+                   Foreground="{StaticResource Text}" HorizontalAlignment="Center" />
+        <TextBlock Text="{Binding ResultText}" FontSize="14" Foreground="{StaticResource Dim}"
+                   TextWrapping="Wrap" TextAlignment="Center" MaxWidth="380" />
+        <TextBlock Text="{Binding XpText}" FontSize="16" Foreground="{StaticResource Accent}"
+                   HorizontalAlignment="Center" />
+        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,6,0,0">
+          <Button Content="Tentar de novo" Command="{Binding RetryCommand}" Classes="accent"
+                  CornerRadius="10" Padding="18,11" />
+          <Button Content="Escolher outro tema" Command="{Binding BackCommand}"
+                  CornerRadius="10" Padding="18,11" Background="{StaticResource Surface2}" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+  </Panel>
+</UserControl>

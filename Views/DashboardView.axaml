@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:EnglishStudy.ViewModels"
+             x:Class="EnglishStudy.Views.DashboardView"
+             x:DataType="vm:DashboardViewModel"
+             Background="{StaticResource Bg}">
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="30" Spacing="18" MaxWidth="880" HorizontalAlignment="Left">
+
+      <TextBlock Text="{Binding Greeting}" FontSize="26" FontWeight="Bold"
+                 Foreground="{StaticResource Text}" TextWrapping="Wrap" />
+
+      <Grid ColumnDefinitions="*,*" ColumnSpacing="14">
+
+        <Border Grid.Column="0" Background="{StaticResource Surface}" CornerRadius="14" Padding="18">
+          <StackPanel Spacing="6">
+            <TextBlock Text="Sequência" FontSize="13" Foreground="{StaticResource Dim}" />
+            <TextBlock Text="{Binding StreakText}" FontSize="19" FontWeight="SemiBold"
+                       Foreground="{StaticResource Warn}" TextWrapping="Wrap" />
+          </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Background="{StaticResource Surface}" CornerRadius="14" Padding="18">
+          <StackPanel Spacing="8">
+            <TextBlock Text="{Binding LevelText}" FontSize="19" FontWeight="SemiBold"
+                       Foreground="{StaticResource Text}" />
+            <ProgressBar Value="{Binding LevelProgress}" Minimum="0" Maximum="100" Height="10"
+                         Foreground="{StaticResource Primary}" Background="{StaticResource Surface2}" />
+            <TextBlock Text="{Binding XpText}" FontSize="12" Foreground="{StaticResource Dim}" TextWrapping="Wrap" />
+          </StackPanel>
+        </Border>
+      </Grid>
+
+      <Border Background="{StaticResource Surface}" CornerRadius="14" Padding="20">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+          <StackPanel Grid.Column="0" Spacing="6">
+            <TextBlock Text="📚  Hoje" FontSize="15" FontWeight="SemiBold"
+                       Foreground="{StaticResource Text}" />
+            <TextBlock Text="{Binding DueText}" FontSize="18" Foreground="{StaticResource Primary}"
+                       TextWrapping="Wrap" />
+            <TextBlock Text="{Binding DueDetail}" FontSize="12" Foreground="{StaticResource Dim}" />
+          </StackPanel>
+          <Button Grid.Column="1" Content="Revisar agora" Command="{Binding GoFlashcards}"
+                  Classes="accent" CornerRadius="10" Padding="18,12" VerticalAlignment="Center" />
+        </Grid>
+      </Border>
+
+      <Border Background="{StaticResource Surface}" CornerRadius="14" Padding="20">
+        <StackPanel Spacing="8">
+          <TextBlock Text="📈  Progresso no vocabulário" FontSize="15" FontWeight="SemiBold"
+                     Foreground="{StaticResource Text}" />
+          <TextBlock Text="{Binding LearnedText}" FontSize="14" Foreground="{StaticResource Text}" />
+          <ProgressBar Value="{Binding LearnedProgress}" Minimum="0" Maximum="100" Height="10"
+                       Foreground="{StaticResource Accent}" Background="{StaticResource Surface2}" />
+          <TextBlock Text="{Binding StatsText}" FontSize="12" Foreground="{StaticResource Dim}" />
+        </StackPanel>
+      </Border>
+
+      <StackPanel Orientation="Horizontal" Spacing="10">
+        <Button Content="📚  Fazer lição" Command="{Binding GoLessons}"
+                CornerRadius="10" Padding="16,11" Background="{StaticResource Surface2}" />
+        <Button Content="❓  Quiz de gramática" Command="{Binding GoQuiz}"
+                CornerRadius="10" Padding="16,11" Background="{StaticResource Surface2}" />
+        <Button Content="💬  Conversar com a Mia" Command="{Binding GoChat}"
+                CornerRadius="10" Padding="16,11" Background="{StaticResource Surface2}" />
+      </StackPanel>
+
+      <Border Background="{StaticResource Surface}" CornerRadius="14" Padding="18">
+        <StackPanel Spacing="6">
+          <TextBlock Text="💡  Dica do dia" FontSize="13" Foreground="{StaticResource Dim}" />
+          <TextBlock Text="{Binding Tip}" FontSize="14" Foreground="{StaticResource Text}" TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

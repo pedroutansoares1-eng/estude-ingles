@@ -1,0 +1,51 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:EnglishStudy.ViewModels"
+             xmlns:views="using:EnglishStudy.Views"
+             x:Class="EnglishStudy.App">
+
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
+
+  <Application.DataTemplates>
+    <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+      <views:DashboardView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:FlashcardsViewModel}">
+      <views:FlashcardsView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:LessonsViewModel}">
+      <views:LessonsView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:QuizViewModel}">
+      <views:QuizView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ChatViewModel}">
+      <views:ChatView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:VocabularyViewModel}">
+      <views:VocabularyView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+      <views:SettingsView />
+    </DataTemplate>
+  </Application.DataTemplates>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <FontFamily x:Key="ContentControlThemeFontFamily">avares://Avalonia.Fonts.Inter/Assets#Inter</FontFamily>
+
+      <SolidColorBrush x:Key="Bg" Color="#0F172A" />
+      <SolidColorBrush x:Key="Surface" Color="#1E293B" />
+      <SolidColorBrush x:Key="Surface2" Color="#28374D" />
+      <SolidColorBrush x:Key="Primary" Color="#22C55E" />
+      <SolidColorBrush x:Key="Accent" Color="#3B82F6" />
+      <SolidColorBrush x:Key="Danger" Color="#EF4444" />
+      <SolidColorBrush x:Key="Warn" Color="#F59E0B" />
+      <SolidColorBrush x:Key="Text" Color="#E2E8F0" />
+      <SolidColorBrush x:Key="Dim" Color="#94A3B8" />
+    </ResourceDictionary>
+  </Application.Resources>
+
+</Application>

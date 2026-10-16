@@ -1,0 +1,99 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:EnglishStudy.ViewModels"
+             x:Class="EnglishStudy.Views.VocabularyView"
+             x:DataType="vm:VocabularyViewModel"
+             Background="{StaticResource Bg}">
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="30" Spacing="16" MaxWidth="820" HorizontalAlignment="Left">
+
+      <TextBlock Text="📖  Meu Vocabulário" FontSize="24" FontWeight="Bold"
+                 Foreground="{StaticResource Text}" />
+      <TextBlock Text="{Binding RowsCountText}" FontSize="13" Foreground="{StaticResource Dim}" />
+
+      <!-- Adicionar palavra -->
+      <Border Background="{StaticResource Surface}" CornerRadius="14" Padding="20">
+        <StackPanel Spacing="10">
+          <TextBlock Text="Adicionar uma palavra" FontSize="15" FontWeight="SemiBold"
+                     Foreground="{StaticResource Text}" />
+
+          <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+            <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding NewPt, Mode=TwoWay}"
+                     Watermark="Português (ex.: cachorro)" CornerRadius="8" Padding="12,9" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding NewEn, Mode=TwoWay}"
+                     Watermark="Inglês (ex.: dog)" CornerRadius="8" Padding="12,9" />
+            <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding NewExampleEn, Mode=TwoWay}"
+                     Watermark="Frase em inglês (opcional)" CornerRadius="8" Padding="12,9" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NewExamplePt, Mode=TwoWay}"
+                     Watermark="Tradução da frase (opcional)" CornerRadius="8" Padding="12,9" />
+          </Grid>
+
+          <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="10">
+            <ComboBox Grid.Column="0" Width="260" ItemsSource="{Binding CategoryChoices}"
+                      SelectedItem="{Binding SelectedNewCategory, Mode=TwoWay}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:CategoryOption">
+                  <TextBlock Text="{Binding Label}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Grid.Column="1" Content="Adicionar palavra" Command="{Binding AddCommand}"
+                    Classes="accent" CornerRadius="10" Padding="18,10" />
+            <TextBlock Grid.Column="2" Text="{Binding AddStatus}" FontSize="12"
+                       Foreground="{StaticResource Dim}" VerticalAlignment="Center"
+                       TextWrapping="Wrap" />
+          </Grid>
+        </StackPanel>
+      </Border>
+
+      <!-- Filtros -->
+      <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="10">
+        <ComboBox Grid.Column="0" Width="260" ItemsSource="{Binding Filters}"
+                  SelectedItem="{Binding SelectedFilter, Mode=TwoWay}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate x:DataType="vm:CategoryOption">
+              <TextBlock Text="{Binding Label}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+        <CheckBox Grid.Column="1" Content="Só as minhas palavras" IsChecked="{Binding OnlyMine, Mode=TwoWay}"
+                  VerticalAlignment="Center" />
+        <Button Grid.Column="2" Content="Limpar filtros" Command="{Binding ClearFilterCommand}"
+                CornerRadius="10" Padding="14,8" HorizontalAlignment="Left"
+                Background="{StaticResource Surface2}" />
+      </Grid>
+
+      <!-- Lista -->
+      <TextBlock Text="Nenhuma palavra encontrada com esse filtro." FontSize="13"
+                 Foreground="{StaticResource Dim}" IsVisible="{Binding IsEmptyList}" />
+
+      <ItemsControl ItemsSource="{Binding Rows}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:WordRow">
+            <Border Background="{StaticResource Surface}" CornerRadius="12" Padding="16"
+                    Margin="0,0,0,8">
+              <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <StackPanel Grid.Column="0" Spacing="3">
+                  <TextBlock Text="{Binding En}" FontSize="16" FontWeight="SemiBold"
+                             Foreground="{StaticResource Text}" TextWrapping="Wrap" />
+                  <TextBlock Text="{Binding Pt}" FontSize="14" Foreground="{StaticResource Dim}"
+                             TextWrapping="Wrap" />
+                  <TextBlock Text="{Binding ExampleEn}" FontSize="12" FontStyle="Italic"
+                             Foreground="{StaticResource Accent}" TextWrapping="Wrap"
+                             IsVisible="{Binding HasExample}" />
+                  <TextBlock Text="{Binding CategoryLabel}" FontSize="11"
+                             Foreground="{StaticResource Dim}" />
+                </StackPanel>
+                <Button Grid.Column="1" Content="Remover" Command="{Binding DeleteCommand}"
+                        IsVisible="{Binding IsUser}" VerticalAlignment="Center"
+                        CornerRadius="8" Padding="12,7" Background="{StaticResource Surface2}" />
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

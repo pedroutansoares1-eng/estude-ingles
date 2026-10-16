@@ -1,0 +1,104 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:EnglishStudy.ViewModels"
+             x:Class="EnglishStudy.Views.FlashcardsView"
+             x:DataType="vm:FlashcardsViewModel"
+             Background="{StaticResource Bg}">
+
+  <Grid Margin="30" RowDefinitions="Auto,*" RowSpacing="18">
+
+    <StackPanel Grid.Row="0" Spacing="8">
+      <TextBlock Text="🃏  Flashcards" FontSize="24" FontWeight="Bold"
+                 Foreground="{StaticResource Text}" />
+      <TextBlock Text="{Binding QueueText}" FontSize="13" Foreground="{StaticResource Dim}" />
+      <ProgressBar Value="{Binding ProgressValue}" Minimum="0" Maximum="100" Height="8"
+                   Foreground="{StaticResource Primary}" Background="{StaticResource Surface2}" />
+      <TextBlock Text="{Binding ProgressText}" FontSize="12" Foreground="{StaticResource Dim}" />
+    </StackPanel>
+
+    <Panel Grid.Row="1">
+
+      <!-- Nada para revisar -->
+      <Border IsVisible="{Binding IsEmpty}" Background="{StaticResource Surface}" CornerRadius="16"
+              Padding="34" MaxWidth="560" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Spacing="10" HorizontalAlignment="Center">
+          <TextBlock Text="🎉" FontSize="46" HorizontalAlignment="Center" />
+          <TextBlock Text="Tudo em dia por hoje!" FontSize="21" FontWeight="SemiBold"
+                     Foreground="{StaticResource Text}" HorizontalAlignment="Center" />
+          <TextBlock Text="Você já revisou os cartões de hoje. Volte amanhã para continuar treinando."
+                     FontSize="13" Foreground="{StaticResource Dim}" TextWrapping="Wrap"
+                     TextAlignment="Center" MaxWidth="380" />
+        </StackPanel>
+      </Border>
+
+      <!-- Sessão terminada -->
+      <Border IsVisible="{Binding IsFinished}" Background="{StaticResource Surface}" CornerRadius="16"
+              Padding="34" MaxWidth="560" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Spacing="12" HorizontalAlignment="Center">
+          <TextBlock Text="🏆" FontSize="46" HorizontalAlignment="Center" />
+          <TextBlock Text="Sessão concluída!" FontSize="21" FontWeight="SemiBold"
+                     Foreground="{StaticResource Text}" HorizontalAlignment="Center" />
+          <TextBlock Text="{Binding ReviewedText}" FontSize="15" Foreground="{StaticResource Text}" HorizontalAlignment="Center" />
+          <TextBlock Text="{Binding GoodText}" FontSize="14" Foreground="{StaticResource Primary}" HorizontalAlignment="Center" />
+          <TextBlock Text="{Binding AgainText}" FontSize="14" Foreground="{StaticResource Warn}" HorizontalAlignment="Center" />
+          <TextBlock Text="{Binding SessionXpText}" FontSize="14" Foreground="{StaticResource Accent}" HorizontalAlignment="Center" />
+          <Button Content="Praticar mais" Command="{Binding RestartCommand}" Classes="accent"
+                  CornerRadius="10" Padding="18,11" HorizontalAlignment="Center" Margin="0,6,0,0" />
+        </StackPanel>
+      </Border>
+
+      <!-- Cartão atual -->
+      <Border IsVisible="{Binding HasSession}" Background="{StaticResource Surface}" CornerRadius="16"
+              Padding="30" MaxWidth="640" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Spacing="16">
+
+          <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+            <Border Background="{StaticResource Surface2}" CornerRadius="10" Padding="10,4">
+              <TextBlock Text="{Binding CardType}" FontSize="12" Foreground="{StaticResource Dim}" />
+            </Border>
+            <Border Background="{StaticResource Surface2}" CornerRadius="10" Padding="10,4">
+              <TextBlock Text="{Binding CategoryLabel}" FontSize="12" Foreground="{StaticResource Dim}" />
+            </Border>
+          </StackPanel>
+
+          <TextBlock Text="{Binding Prompt}" FontSize="34" FontWeight="Bold"
+                     Foreground="{StaticResource Text}" HorizontalAlignment="Center"
+                     TextWrapping="Wrap" TextAlignment="Center" />
+
+          <Button Content="🔊  Ouvir" Command="{Binding SpeakCommand}"
+                  IsVisible="{Binding CanSpeak}" HorizontalAlignment="Center"
+                  CornerRadius="10" Padding="14,8" Background="{StaticResource Surface2}" />
+
+          <Button Content="Mostrar resposta" Command="{Binding RevealCommand}"
+                  IsVisible="{Binding !IsAnswerShown}" Classes="accent"
+                  HorizontalAlignment="Center" CornerRadius="10" Padding="24,12" />
+
+          <StackPanel Spacing="10" IsVisible="{Binding IsAnswerShown}" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding Answer}" FontSize="27" FontWeight="SemiBold"
+                       Foreground="{StaticResource Primary}" HorizontalAlignment="Center"
+                       TextWrapping="Wrap" TextAlignment="Center" />
+            <TextBlock Text="{Binding ExampleEn}" FontSize="15" FontStyle="Italic"
+                       Foreground="{StaticResource Text}" HorizontalAlignment="Center"
+                       TextWrapping="Wrap" TextAlignment="Center" IsVisible="{Binding HasExample}" />
+            <TextBlock Text="{Binding ExamplePt}" FontSize="13" Foreground="{StaticResource Dim}"
+                       HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"
+                       IsVisible="{Binding HasExample}" />
+
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,8,0,0">
+              <Button Content="Errei" Command="{Binding RateCommand}" CommandParameter="Again"
+                      CornerRadius="10" Padding="18,11" Background="{StaticResource Danger}" />
+              <Button Content="Difícil" Command="{Binding RateCommand}" CommandParameter="Hard"
+                      CornerRadius="10" Padding="18,11" Background="{StaticResource Warn}" />
+              <Button Content="Bom" Command="{Binding RateCommand}" CommandParameter="Good"
+                      CornerRadius="10" Padding="18,11" Background="{StaticResource Primary}" />
+              <Button Content="Fácil" Command="{Binding RateCommand}" CommandParameter="Easy"
+                      CornerRadius="10" Padding="18,11" Background="{StaticResource Accent}" />
+            </StackPanel>
+          </StackPanel>
+
+        </StackPanel>
+      </Border>
+
+    </Panel>
+  </Grid>
+</UserControl>

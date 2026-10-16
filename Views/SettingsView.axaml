@@ -1,0 +1,94 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:EnglishStudy.ViewModels"
+             x:Class="EnglishStudy.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel"
+             Background="{StaticResource Bg}">
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="30" Spacing="16" MaxWidth="760" HorizontalAlignment="Left">
+
+      <TextBlock Text="⚙️  Configurações" FontSize="24" FontWeight="Bold"
+                 Foreground="{StaticResource Text}" />
+
+      <!-- Perfil -->
+      <Border Background="{StaticResource Surface}" CornerRadius="14" Padding="20">
+        <StackPanel Spacing="10">
+          <TextBlock Text="Perfil e estudo" FontSize="15" FontWeight="SemiBold"
+                     Foreground="{StaticResource Text}" />
+          <TextBlock Text="Seu nome" FontSize="12" Foreground="{StaticResource Dim}" />
+          <TextBox Text="{Binding Name, Mode=TwoWay}" Watermark="Como quer ser chamado(a)?"
+                   CornerRadius="8" Padding="12,9" MaxWidth="360" HorizontalAlignment="Left" />
+          <TextBlock Text="Palavras novas por dia (0 a 100)" FontSize="12"
+                     Foreground="{StaticResource Dim}" />
+          <TextBox Text="{Binding NewCardsText, Mode=TwoWay}" CornerRadius="8" Padding="12,9"
+                   MaxWidth="140" HorizontalAlignment="Left" />
+        </StackPanel>
+      </Border>
+
+      <!-- IA -->
+      <Border Background="{StaticResource Surface}" CornerRadius="14" Padding="20">
+        <StackPanel Spacing="10">
+          <TextBlock Text="Conversação com IA" FontSize="15" FontWeight="SemiBold"
+                     Foreground="{StaticResource Text}" />
+          <TextBlock Text="{Binding AiNote}" FontSize="12" Foreground="{StaticResource Dim}"
+                     TextWrapping="Wrap" />
+
+          <TextBlock Text="Endereço do servidor" FontSize="12" Foreground="{StaticResource Dim}" />
+          <TextBox Text="{Binding Endpoint, Mode=TwoWay}" CornerRadius="8" Padding="12,9" />
+
+          <TextBlock Text="Modelo (deixe em branco para usar o que estiver carregado)"
+                     FontSize="12" Foreground="{StaticResource Dim}" />
+          <TextBox Text="{Binding Model, Mode=TwoWay}" CornerRadius="8" Padding="12,9" />
+
+          <TextBlock Text="Chave de API (opcional para servidores locais)"
+                     FontSize="12" Foreground="{StaticResource Dim}" />
+          <TextBox Text="{Binding ApiKey, Mode=TwoWay}" CornerRadius="8" Padding="12,9" />
+
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Content="Testar conexão" Command="{Binding TestAiCommand}"
+                    IsEnabled="{Binding !IsTesting}" CornerRadius="10" Padding="16,9"
+                    Background="{StaticResource Surface2}" />
+            <TextBlock Text="{Binding TestStatus}" FontSize="12" Foreground="{StaticResource Dim}"
+                       VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="380" />
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <!-- Pronúncia -->
+      <Border Background="{StaticResource Surface}" CornerRadius="14" Padding="20">
+        <StackPanel Spacing="6">
+          <TextBlock Text="Pronúncia" FontSize="15" FontWeight="SemiBold"
+                     Foreground="{StaticResource Text}" />
+          <TextBlock Text="{Binding SpeechNote}" FontSize="12" Foreground="{StaticResource Dim}"
+                     TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+
+      <!-- Salvar -->
+      <StackPanel Orientation="Horizontal" Spacing="12">
+        <Button Content="Salvar alterações" Command="{Binding SaveCommand}" Classes="accent"
+                CornerRadius="10" Padding="20,11" />
+        <TextBlock Text="{Binding SaveStatus}" FontSize="13" Foreground="{StaticResource Primary}"
+                   VerticalAlignment="Center" />
+      </StackPanel>
+
+      <!-- Dados -->
+      <Border Background="{StaticResource Surface}" CornerRadius="14" Padding="20">
+        <StackPanel Spacing="8">
+          <TextBlock Text="Dados" FontSize="15" FontWeight="SemiBold"
+                     Foreground="{StaticResource Text}" />
+          <TextBlock Text="Seus dados ficam salvos em:" FontSize="12" Foreground="{StaticResource Dim}" />
+          <TextBlock Text="{Binding DataPath}" FontSize="12" Foreground="{StaticResource Accent}"
+                     TextWrapping="Wrap" />
+          <Button Content="{Binding ResetButtonText}" Command="{Binding ResetCommand}"
+                  HorizontalAlignment="Left" CornerRadius="10" Padding="16,10" Margin="0,6,0,0"
+                  Background="{StaticResource Surface2}" />
+          <TextBlock Text="{Binding ResetStatus}" FontSize="12" Foreground="{StaticResource Warn}"
+                     TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

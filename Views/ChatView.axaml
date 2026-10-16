@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:EnglishStudy.ViewModels"
+             xmlns:models="using:EnglishStudy.Models"
+             x:Class="EnglishStudy.Views.ChatView"
+             x:DataType="vm:ChatViewModel"
+             Background="{StaticResource Bg}">
+
+  <Grid Margin="30" RowDefinitions="Auto,Auto,*,Auto" RowSpacing="12">
+
+    <!-- Cabeçalho -->
+    <StackPanel Grid.Row="0" Spacing="10">
+      <TextBlock Text="💬  Conversar com a Mia" FontSize="24" FontWeight="Bold"
+                 Foreground="{StaticResource Text}" />
+      <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
+        <ComboBox Grid.Column="0" Width="300" ItemsSource="{Binding Sessions}"
+                  SelectedItem="{Binding SelectedSession, Mode=TwoWay}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate x:DataType="models:ChatSession">
+              <TextBlock Text="{Binding Title}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="12"
+                   Foreground="{StaticResource Dim}" Text="{Binding SessionHint}" />
+        <Button Grid.Column="2" Content="Nova conversa" Command="{Binding NewChatCommand}"
+                CornerRadius="10" Padding="14,8" Background="{StaticResource Surface2}" />
+        <Button Grid.Column="3" Content="Apagar" Command="{Binding DeleteChatCommand}"
+                CornerRadius="10" Padding="14,8" Background="{StaticResource Surface2}" />
+      </Grid>
+    </StackPanel>
+
+    <!-- Sugestões -->
+    <ItemsControl Grid.Row="1" ItemsSource="{Binding Starters}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <WrapPanel />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="vm:CategoryOption">
+          <Button Content="{Binding Label}" Command="{Binding Command}" Margin="0,0,8,0"
+                  CornerRadius="14" Padding="12,6" Background="{StaticResource Surface}" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <!-- Mensagens -->
+    <ScrollViewer Grid.Row="2" x:Name="MessagesScroll" VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+      <ItemsControl ItemsSource="{Binding Messages}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:ChatBubble">
+            <Border HorizontalAlignment="{Binding Align}" Background="{Binding Background}"
+                    CornerRadius="12" Padding="14,10" Margin="0,4" MaxWidth="580">
+              <TextBlock Text="{Binding Text}" Foreground="{Binding Foreground}"
+                         FontSize="14" TextWrapping="Wrap" />
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+
+    <!-- Entrada -->
+    <StackPanel Grid.Row="3" Spacing="6">
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+        <TextBox Grid.Column="0" Text="{Binding Input, Mode=TwoWay}" Watermark="Escreva em inglês…"
+                 CornerRadius="10" Padding="12,10" FontSize="14" />
+        <Button Grid.Column="1" Content="Enviar" Command="{Binding SendCommand}"
+                Classes="accent" CornerRadius="10" Padding="20,10" />
+      </Grid>
+      <TextBlock Text="{Binding Status}" IsVisible="{Binding HasStatus}" FontSize="12"
+                 Foreground="{StaticResource Warn}" TextWrapping="Wrap" />
+    </StackPanel>
+
+  </Grid>
+</UserControl>
