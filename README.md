@@ -33,6 +33,26 @@ dotnet run
 O aplicativo abre com o banco de palavras já preenchido — não precisa configurar nada
 para começar a usar os flashcards, as lições e a gramática.
 
+## Atalho no menu do sistema
+
+Para abrir o app como qualquer outro programa (sem precisar do terminal):
+
+```bash
+./instalar-atalho.sh
+```
+
+O script compila a versão de produção, instala os arquivos em
+`~/.local/share/estude-ingles`, cria o inicializador `~/.local/bin/estude-ingles` e
+adiciona o atalho **“Estude Inglês”** no menu de aplicativos, com ícone próprio.
+
+Depois disso dá para abrir de duas formas:
+
+- pelo menu de aplicativos, procurando por **Estude Inglês**;
+- pelo terminal, digitando `estude-ingles`.
+
+> Rode o script de novo sempre que alterar o código, para o atalho passar a usar a
+> versão nova.
+
 ### Conversar com a IA (opcional)
 
 O modo **Conversar** usa um servidor local compatível com a API da OpenAI.
@@ -91,6 +111,8 @@ Models/               # dados (palavras, cartões SRS, perguntas, perfil, chat)
 Services/             # armazenamento, SRS, gamificação, IA, fala, conteúdo
 ViewModels/           # lógica das telas
 Views/                # telas em XAML
+assets/               # ícone usado no atalho do sistema
+instalar-atalho.sh    # instala o app no menu de aplicativos
 tests/EnglishStudy.Tests/   # testes (xunit)
 ```
 
